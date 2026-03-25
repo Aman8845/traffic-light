@@ -16,9 +16,13 @@ function App() {
 
   const startSimulation = async () => {
     setIsSimulating(true);
-    // Fetch calculation from backend
+    // Dynamically detect if we are running locally or in production
+    const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? 'http://127.0.0.1:8000'
+      : 'https://traffic-light-backend.onrender.com'; // Replace this with your actual Render URL later
+      
     try {
-      const response = await fetch('http://127.0.0.1:8000/calculate', {
+      const response = await fetch(`${API_BASE_URL}/calculate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
